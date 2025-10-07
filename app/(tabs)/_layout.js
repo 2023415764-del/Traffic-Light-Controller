@@ -1,12 +1,13 @@
+
 import React from 'react';
 import { Platform } from 'react-native';
 import { NativeTabs, Icon, Label } from 'expo-router/unstable-native-tabs';
 import { Stack } from 'expo-router';
-import FloatingTabBar, { TabBarItem } from '@/components/FloatingTabBar';
+import FloatingTabBar from '../../components/FloatingTabBar';
 
 export default function TabLayout() {
   // Define the tabs configuration
-  const tabs: TabBarItem[] = [
+  const tabs = [
     {
       name: '(home)',
       route: '/(tabs)/(home)/',

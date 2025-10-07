@@ -1,30 +1,15 @@
+
 import React from "react";
 import {
   ActivityIndicator,
   Pressable,
   StyleSheet,
   Text,
-  TextStyle,
   useColorScheme,
-  ViewStyle,
 } from "react-native";
-import { appleBlue, zincColors } from "@/constants/Colors";
+import { appleBlue, zincColors } from "../constants/Colors";
 
-type ButtonVariant = "filled" | "outline" | "ghost";
-type ButtonSize = "sm" | "md" | "lg";
-
-interface ButtonProps {
-  onPress?: () => void;
-  variant?: ButtonVariant;
-  size?: ButtonSize;
-  disabled?: boolean;
-  loading?: boolean;
-  children: React.ReactNode;
-  style?: ViewStyle;
-  textStyle?: TextStyle;
-}
-
-export const Button: React.FC<ButtonProps> = ({
+export const Button = ({
   onPress,
   variant = "filled",
   size = "md",
@@ -37,17 +22,14 @@ export const Button: React.FC<ButtonProps> = ({
   const colorScheme = useColorScheme();
   const isDark = colorScheme === "dark";
 
-  const sizeStyles: Record<
-    ButtonSize,
-    { height: number; fontSize: number; padding: number }
-  > = {
+  const sizeStyles = {
     sm: { height: 36, fontSize: 14, padding: 12 },
     md: { height: 44, fontSize: 16, padding: 16 },
     lg: { height: 55, fontSize: 18, padding: 20 },
   };
 
   const getVariantStyle = () => {
-    const baseStyle: ViewStyle = {
+    const baseStyle = {
       borderRadius: 12,
       flexDirection: "row",
       alignItems: "center",

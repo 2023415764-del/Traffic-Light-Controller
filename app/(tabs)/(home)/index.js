@@ -12,34 +12,21 @@ import {
   Platform,
   Animated
 } from "react-native";
-import { IconSymbol } from "@/components/IconSymbol";
+import { IconSymbol } from "../../../components/IconSymbol";
 import { GlassView } from "expo-glass-effect";
 import { useTheme } from "@react-navigation/native";
-import { colors } from "@/styles/commonStyles";
-
-interface FuzzyInputs {
-  carDensity: string;
-  pedestrianCount: string;
-  timeOfDay: string;
-  weatherCondition: string;
-}
-
-interface TrafficLightState {
-  currentLight: 'red' | 'yellow' | 'green';
-  duration: number;
-  recommendation: string;
-}
+import { colors } from "../../../styles/commonStyles";
 
 export default function HomeScreen() {
   const theme = useTheme();
-  const [inputs, setInputs] = useState<FuzzyInputs>({
+  const [inputs, setInputs] = useState({
     carDensity: '',
     pedestrianCount: '',
     timeOfDay: '',
     weatherCondition: ''
   });
   
-  const [trafficLight, setTrafficLight] = useState<TrafficLightState>({
+  const [trafficLight, setTrafficLight] = useState({
     currentLight: 'red',
     duration: 0,
     recommendation: 'Enter traffic data to get recommendations'
@@ -48,7 +35,7 @@ export default function HomeScreen() {
   const [isCalculating, setIsCalculating] = useState(false);
 
   // Fuzzy Logic Implementation
-  const fuzzyLogicCalculation = (inputs: FuzzyInputs): TrafficLightState => {
+  const fuzzyLogicCalculation = (inputs) => {
     console.log('Starting fuzzy logic calculation with inputs:', inputs);
     
     const carDensity = parseFloat(inputs.carDensity) || 0;
@@ -113,7 +100,7 @@ export default function HomeScreen() {
     console.log('Calculated green duration:', finalDuration);
 
     // Determine current light state and recommendation
-    let currentLight: 'red' | 'yellow' | 'green' = 'green';
+    let currentLight = 'green';
     let recommendation = '';
 
     if (carDensity > 30 || (rushHour > 0.5 && carDensity > 15)) {
@@ -175,7 +162,7 @@ export default function HomeScreen() {
     });
   };
 
-  const getTrafficLightColor = (light: string) => {
+  const getTrafficLightColor = (light) => {
     switch (light) {
       case 'red': return '#FF3B30';
       case 'yellow': return '#FFCC00';

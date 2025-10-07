@@ -1,3 +1,4 @@
+
 import React from 'react';
 import {
   View,
@@ -9,7 +10,7 @@ import {
 } from 'react-native';
 import { useRouter, usePathname } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { IconSymbol } from '@/components/IconSymbol';
+import { IconSymbol } from './IconSymbol';
 import { BlurView } from 'expo-blur';
 import { useTheme } from '@react-navigation/native';
 import Animated, {
@@ -21,26 +22,12 @@ import Animated, {
 
 const { width: screenWidth } = Dimensions.get('window');
 
-export interface TabBarItem {
-  name: string;
-  route: string;
-  icon: string;
-  label: string;
-}
-
-interface FloatingTabBarProps {
-  tabs: TabBarItem[];
-  containerWidth?: number;
-  borderRadius?: number;
-  bottomMargin?: number;
-}
-
 export default function FloatingTabBar({
   tabs,
   containerWidth = 240,
   borderRadius = 25,
   bottomMargin
-}: FloatingTabBarProps) {
+}) {
   const router = useRouter();
   const pathname = usePathname();
   const theme = useTheme();
@@ -92,11 +79,9 @@ export default function FloatingTabBar({
     }
   }, [activeTabIndex, animatedValue]);
 
-  const handleTabPress = (route: string) => {
+  const handleTabPress = (route) => {
     router.push(route);
   };
-
-  // Remove unnecessary tabBarStyle animation to prevent flickering
 
   const indicatorStyle = useAnimatedStyle(() => {
     const tabWidth = (containerWidth - 16) / tabs.length; // Account for container padding (8px on each side)
@@ -226,7 +211,11 @@ const styles = StyleSheet.create({
     // borderRadius and other styling applied dynamically
   },
   background: {
-    ...StyleSheet.absoluteFillObject,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     // Dynamic styling applied in component
   },
   indicator: {

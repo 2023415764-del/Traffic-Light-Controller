@@ -1,19 +1,13 @@
-import React from "react";
-import { View, ViewStyle, Text } from "react-native";
 
-interface IconCircleProps {
-  emoji: string;
-  backgroundColor?: string;
-  size?: number;
-  style?: ViewStyle;
-}
+import React from "react";
+import { View, Text } from "react-native";
 
 export function IconCircle({
   emoji,
   backgroundColor = "lightblue",
   size = 48,
   style,
-}: IconCircleProps) {
+}) {
   return (
     <View
       style={[

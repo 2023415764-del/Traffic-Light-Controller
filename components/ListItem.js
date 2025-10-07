@@ -1,3 +1,4 @@
+
 import React from "react";
 import * as Haptics from "expo-haptics";
 import { Pressable, StyleSheet, useColorScheme, View, Text } from "react-native";
@@ -5,24 +6,20 @@ import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeabl
 import Animated, {
   configureReanimatedLogger,
   FadeIn,
-  SharedValue,
   useAnimatedStyle,
 } from "react-native-reanimated";
 import Reanimated from "react-native-reanimated";
-import { appleRed, borderColor } from "@/constants/Colors";
+import { appleRed, borderColor } from "../constants/Colors";
 import { IconCircle } from "./IconCircle";
 import { IconSymbol } from "./IconSymbol";
 
 configureReanimatedLogger({ strict: false });
 
-export default function ListItem({ listId }: { listId: string }) {
+export default function ListItem({ listId }) {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === "dark";
 
-  const RightAction = (
-    prog: SharedValue<number>,
-    drag: SharedValue<number>
-  ) => {
+  const RightAction = (prog, drag) => {
     const styleAnimation = useAnimatedStyle(() => ({
       transform: [{ translateX: drag.value + 200 }],
     }));
@@ -68,11 +65,6 @@ export const NicknameCircle = ({
   color,
   index = 0,
   isEllipsis = false,
-}: {
-  nickname: string;
-  color: string;
-  index?: number;
-  isEllipsis?: boolean;
 }) => {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === "dark";

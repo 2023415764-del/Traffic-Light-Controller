@@ -1,3 +1,4 @@
+
 import "react-native-reanimated";
 import React, { useEffect } from "react";
 import { useFonts } from "expo-font";
@@ -10,12 +11,11 @@ import { useNetworkState } from "expo-network";
 import {
   DarkTheme,
   DefaultTheme,
-  Theme,
   ThemeProvider,
 } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
-import { Button } from "@/components/button";
-import { WidgetProvider } from "@/contexts/WidgetContext";
+import { Button } from "../components/button";
+import { WidgetProvider } from "../contexts/WidgetContext";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -53,7 +53,7 @@ export default function RootLayout() {
     return null;
   }
 
-  const CustomDefaultTheme: Theme = {
+  const CustomDefaultTheme = {
     ...DefaultTheme,
     dark: false,
     colors: {
@@ -66,7 +66,7 @@ export default function RootLayout() {
     },
   };
 
-  const CustomDarkTheme: Theme = {
+  const CustomDarkTheme = {
     ...DarkTheme,
     colors: {
       primary: "rgb(10, 132, 255)", // System Blue (Dark Mode)

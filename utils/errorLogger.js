@@ -1,15 +1,16 @@
+
 // Global error logging for runtime errors
 
 import { Platform } from "react-native";
 
 // Simple debouncing to prevent duplicate errors
-const recentErrors: { [key: string]: boolean } = {};
-const clearErrorAfterDelay = (errorKey: string) => {
+const recentErrors = {};
+const clearErrorAfterDelay = (errorKey) => {
   setTimeout(() => delete recentErrors[errorKey], 100);
 };
 
 // Function to send errors to parent window (React frontend)
-const sendErrorToParent = (level: string, message: string, data: any) => {
+const sendErrorToParent = (level, message, data) => {
   // Create a simple key to identify duplicate errors
   const errorKey = `${level}:${message}:${JSON.stringify(data)}`;
 
@@ -43,7 +44,7 @@ const sendErrorToParent = (level: string, message: string, data: any) => {
 };
 
 // Function to extract meaningful source location from stack trace
-const extractSourceLocation = (stack: string): string => {
+const extractSourceLocation = (stack) => {
   if (!stack) return '';
 
   // Look for various patterns in the stack trace
@@ -77,7 +78,7 @@ const extractSourceLocation = (stack: string): string => {
 };
 
 // Function to get caller information from stack trace
-const getCallerInfo = (): string => {
+const getCallerInfo = () => {
   const stack = new Error().stack || '';
   const lines = stack.split('\n');
 
@@ -137,7 +138,7 @@ export const setupErrorLogging = () => {
   // UNCOMMENT BELOW CODE TO GET MORE SENSITIVE ERROR LOGGING (usually many errors triggered per 1 uncaught runtime error)
 
   // Override console.error to capture more detailed information
-  // console.error = (...args: any[]) => {
+  // console.error = (...args) => {
   //   const stack = new Error().stack || '';
   //   const sourceInfo = extractSourceLocation(stack);
   //   const callerInfo = getCallerInfo();
@@ -153,7 +154,7 @@ export const setupErrorLogging = () => {
   // };
 
   // Override console.warn to capture warnings with source location
-  // console.warn = (...args: any[]) => {
+  // console.warn = (...args) => {
   //   const stack = new Error().stack || '';
   //   const sourceInfo = extractSourceLocation(stack);
   //   const callerInfo = getCallerInfo();
@@ -168,7 +169,7 @@ export const setupErrorLogging = () => {
   // };
 
   // // Also override console.log to catch any logs that might contain error information
-  // console.log = (...args: any[]) => {
+  // console.log = (...args) => {
   //   const message = args.join(' ');
 
   //   // Check if this log message contains warning/error keywords
@@ -188,13 +189,13 @@ export const setupErrorLogging = () => {
   // };
 
   // Try to intercept React Native warnings at a lower level
-  if (typeof window !== 'undefined' && (window as any).__DEV__) {
+  if (typeof window !== 'undefined' && window.__DEV__) {
     // Override React's warning system if available
-    const originalWarn = (window as any).console?.warn || console.warn;
+    const originalWarn = window.console?.warn || console.warn;
 
     // Monkey patch any React warning functions
-    if ((window as any).React && (window as any).React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED) {
-      const internals = (window as any).React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+    if (window.React && window.React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED) {
+      const internals = window.React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
       if (internals.ReactDebugCurrentFrame) {
         const originalGetStackAddendum = internals.ReactDebugCurrentFrame.getStackAddendum;
         internals.ReactDebugCurrentFrame.getStackAddendum = function() {

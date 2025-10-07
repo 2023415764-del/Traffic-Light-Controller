@@ -1,13 +1,12 @@
+
 /* eslint-disable */
 
 // @eslint-ignore-file
 // @ts-nocheck
-import { cloneElement, PropsWithChildren, useContext } from "react";
+import { cloneElement, useContext } from "react";
 import { EditableContext } from "./withEditableWrapper_";
 
-export type ElementTypes = "Text" | "View";
-
-const isPrimitive = (item: any) => {
+const isPrimitive = (item) => {
   if (Array.isArray(item)) return item.every((el) => isPrimitive(el));
   if (typeof item === "object")
     Object.values(item).every((el) => isPrimitive(el));
@@ -17,7 +16,7 @@ const isPrimitive = (item: any) => {
   return false;
 };
 
-export const getType = (el: any): ElementTypes | undefined => {
+export const getType = (el) => {
   if (el?.type?.render?.displayName === "Text") return "Text";
   if (el?.type?.render?.displayName === "View") return "View";
   if (el?.type?.name === "Icon") return "Icon";
@@ -27,12 +26,12 @@ export const getType = (el: any): ElementTypes | undefined => {
   return undefined;
 };
 
-const toArray = (object: T | T[]): T[] => {
+const toArray = (object) => {
   if (Array.isArray(object)) return object;
   return [object];
 };
 
-export default function EditableElement_(_props: PropsWithChildren<any>) {
+export default function EditableElement_(_props) {
   const {
     editModeEnabled,
     selected,
@@ -63,7 +62,7 @@ export default function EditableElement_(_props: PropsWithChildren<any>) {
         }
       : {};
 
-  const onClick = (ev: any) => {
+  const onClick = (ev) => {
     ev.stopPropagation();
     ev.preventDefault();
     onElementClick({

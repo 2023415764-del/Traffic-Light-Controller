@@ -1,49 +1,27 @@
+
 /* eslint-disable */
 
 import {
   createContext,
-  PropsWithChildren,
   useCallback,
   useEffect,
   useState,
 } from "react";
 import { ElementTypes } from "./EditableElement_";
 
-type ElementProps = {
-  type: ElementTypes;
-  sourceLocation: string;
-  attributes: any;
-  id: string;
-};
+let parentPage = null;
+let origin = null;
 
-type EditableContextType = {
-  onElementClick: (props: ElementProps) => void;
-  editModeEnabled: boolean;
-  attributes: Record<string, any>;
-  selected: string | undefined;
-  setSelected: (hovered: string | undefined) => void;
-  hovered: string | undefined;
-  pushHovered: (hovered: string) => void;
-  popHovered: (hovered: string) => void;
-};
+export const EditableContext = createContext({});
 
-let parentPage: MessageEventSource | null = null;
-let origin: string | null = null;
-
-export const EditableContext = createContext<EditableContextType>({} as any);
-
-export default function withEditableWrapper_<P extends PropsWithChildren>(
-  Comp: React.ComponentType<P>
-) {
-  return function Wrapped(props: P) {
-    const [haveBooted, setHaveBooted] = useState<boolean>(false);
+export default function withEditableWrapper_(Comp) {
+  return function Wrapped(props) {
+    const [haveBooted, setHaveBooted] = useState(false);
     const [editModeEnabled, setEditModeEnabled] = useState(false);
-    const [selected, setSelected] = useState<string>();
-    const [hoveredStack, setHoveredStack] = useState<string[]>([]);
-    const [origin, setOrigin] = useState<string | null>(null);
-    const [overwrittenProps, setOvewrittenProps] = useState<Record<string, {}>>(
-      {}
-    );
+    const [selected, setSelected] = useState();
+    const [hoveredStack, setHoveredStack] = useState([]);
+    const [origin, setOrigin] = useState(null);
+    const [overwrittenProps, setOvewrittenProps] = useState({});
 
     useEffect(() => {
       if (!haveBooted) {
@@ -79,7 +57,7 @@ export default function withEditableWrapper_<P extends PropsWithChildren>(
     }, [haveBooted]);
 
     const postMessageToParent = useCallback(
-      (message: any) => {
+      (message) => {
         if (origin && window.parent) {
           window.parent.postMessage(message, origin);
         }
@@ -87,21 +65,21 @@ export default function withEditableWrapper_<P extends PropsWithChildren>(
       [origin]
     );
 
-    const onElementClick = (props: ElementProps) => {
+    const onElementClick = (props) => {
       setSelected(props.id);
       postMessageToParent({ type: "element_clicked", element: props });
     };
 
     const hovered = hoveredStack.at(-1);
 
-    const pushHovered = (hovered: string) => {
+    const pushHovered = (hovered) => {
       setHoveredStack((hoveredStack) => [
         hovered,
         ...hoveredStack.filter((v) => v !== hovered),
       ]);
     };
 
-    const popHovered = (hovered: string) => {
+    const popHovered = (hovered) => {
       setHoveredStack((hoveredStack) =>
         hoveredStack.filter((v) => v !== hovered)
       );
