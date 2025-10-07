@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Natively",
-    "slug": "Natively",
+    "name": "Traffic Light Control",
+    "slug": "Traffic Light",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/natively-dark.png",

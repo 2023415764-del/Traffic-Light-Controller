@@ -22,9 +22,9 @@ export default function ProfileScreen() {
           styles.profileHeader,
           Platform.OS !== 'ios' && { backgroundColor: theme.dark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)' }
         ]} glassEffectStyle="regular">
-          <IconSymbol name="person.circle.fill" size={80} color={theme.colors.primary} />
-          <Text style={[styles.name, { color: theme.colors.text }]}>John Doe</Text>
-          <Text style={[styles.email, { color: theme.dark ? '#98989D' : '#666' }]}>john.doe@example.com</Text>
+          <IconSymbol traffic light="person.circle.fill" size={80} color={theme.colors.primary} />
+          <Text style={[styles.name, { color: theme.colors.text }]}>Kim Marsya</Text>
+          <Text style={[styles.email, { color: theme.dark ? '#98989D' : '#666' }]}>marsya@gmail.com</Text>
         </GlassView>
 
         <GlassView style={[
@@ -37,7 +37,7 @@ export default function ProfileScreen() {
           </View>
           <View style={styles.infoRow}>
             <IconSymbol name="location.fill" size={20} color={theme.dark ? '#98989D' : '#666'} />
-            <Text style={[styles.infoText, { color: theme.colors.text }]}>San Francisco, CA</Text>
+            <Text style={[styles.infoText, { color: theme.colors.text }]}>Seoul, South Korea</Text>
           </View>
         </GlassView>
       </ScrollView>
@@ -90,3 +90,4 @@ const styles = StyleSheet.create({
     // color handled dynamically
   },
 });
+

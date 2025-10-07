@@ -13,6 +13,7 @@ import {
   Animated
 } from "react-native";
 import { IconSymbol } from "../../../components/IconSymbol";
+import TrafficLight from '../../../components/TrafficLight';
 import { GlassView } from "expo-glass-effect";
 import { useTheme } from "@react-navigation/native";
 import { colors } from "../../../styles/commonStyles";
@@ -33,6 +34,8 @@ export default function HomeScreen() {
   });
 
   const [isCalculating, setIsCalculating] = useState(false);
+  const [liveBlink, setLiveBlink] = useState(false);
+  const [allOn, setAllOn] = useState(false);
 
   // Fuzzy Logic Implementation
   const fuzzyLogicCalculation = (inputs) => {
@@ -211,23 +214,24 @@ export default function HomeScreen() {
           {/* Traffic Light Visualization */}
           <GlassView style={styles.trafficLightContainer} glassEffectStyle="regular">
             <Text style={styles.sectionTitle}>Traffic Light Status</Text>
-            <View style={styles.trafficLightBox}>
-              <View style={[
-                styles.lightCircle,
-                { backgroundColor: trafficLight.currentLight === 'red' ? getTrafficLightColor('red') : '#E5E5EA' }
-              ]} />
-              <View style={[
-                styles.lightCircle,
-                { backgroundColor: trafficLight.currentLight === 'yellow' ? getTrafficLightColor('yellow') : '#E5E5EA' }
-              ]} />
-              <View style={[
-                styles.lightCircle,
-                { backgroundColor: trafficLight.currentLight === 'green' ? getTrafficLightColor('green') : '#E5E5EA' }
-              ]} />
-            </View>
+            <TrafficLight currentLight={trafficLight.currentLight} duration={trafficLight.duration} autoBlink={liveBlink} mode={allOn ? 'all' : 'sequence'} />
             <Text style={styles.durationText}>
               {trafficLight.duration > 0 ? `${trafficLight.duration} seconds` : 'Awaiting calculation'}
             </Text>
+            <View style={{ flexDirection: 'row', gap: 8, marginTop: 8 }}>
+              <TouchableOpacity
+                onPress={() => setLiveBlink(v => !v)}
+                style={{ padding: 8, borderRadius: 8, backgroundColor: liveBlink ? colors.primary : colors.card }}
+              >
+                <Text style={{ color: liveBlink ? '#fff' : colors.text }}>{liveBlink ? 'Stop Live Blink' : 'Start Live Blink'}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => setAllOn(v => !v)}
+                style={{ padding: 8, borderRadius: 8, backgroundColor: allOn ? colors.primary : colors.card }}
+              >
+                <Text style={{ color: allOn ? '#fff' : colors.text }}>{allOn ? 'All On Mode' : 'Sequence Mode'}</Text>
+              </TouchableOpacity>
+            </View>
           </GlassView>
 
           {/* Input Parameters */}
