@@ -1,0 +1,1 @@
+The system takes inputs such as car density, pedestrian count, time of day, and weather conditions, and uses fuzzy logic to determine the optimal traffic light state (red, yellow, green) and duration. The system provides a user interface with input fields, a calculate button, and a visual traffic light display with real-time state and duration.
