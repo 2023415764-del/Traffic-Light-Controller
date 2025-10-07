@@ -11,7 +11,25 @@ export default function TabLayout() {
       name: '(home)',
       route: '/(tabs)/(home)/',
       icon: 'house.fill',
-      label: 'Home',
+      label: 'Controller',
+    },
+    {
+      name: 'java',
+      route: '/(tabs)/java',
+      icon: 'doc.text.fill',
+      label: 'Java',
+    },
+    {
+      name: 'python',
+      route: '/(tabs)/python',
+      icon: 'doc.text.fill',
+      label: 'Python',
+    },
+    {
+      name: 'html',
+      route: '/(tabs)/html',
+      icon: 'doc.text.fill',
+      label: 'HTML',
     },
     {
       name: 'profile',
@@ -27,7 +45,19 @@ export default function TabLayout() {
       <NativeTabs>
         <NativeTabs.Trigger name="(home)">
           <Icon sf="house.fill" drawable="ic_home" />
-          <Label>Home</Label>
+          <Label>Controller</Label>
+        </NativeTabs.Trigger>
+        <NativeTabs.Trigger name="java">
+          <Icon sf="doc.text.fill" drawable="ic_document" />
+          <Label>Java</Label>
+        </NativeTabs.Trigger>
+        <NativeTabs.Trigger name="python">
+          <Icon sf="doc.text.fill" drawable="ic_document" />
+          <Label>Python</Label>
+        </NativeTabs.Trigger>
+        <NativeTabs.Trigger name="html">
+          <Icon sf="doc.text.fill" drawable="ic_document" />
+          <Label>HTML</Label>
         </NativeTabs.Trigger>
         <NativeTabs.Trigger name="profile">
           <Icon sf="person.fill" drawable="ic_profile" />
@@ -47,6 +77,9 @@ export default function TabLayout() {
         }}
       >
         <Stack.Screen name="(home)" />
+        <Stack.Screen name="java" />
+        <Stack.Screen name="python" />
+        <Stack.Screen name="html" />
         <Stack.Screen name="profile" />
       </Stack>
       <FloatingTabBar tabs={tabs} />
